@@ -64,7 +64,7 @@ If you are using the webapp (https://typst.app/), upload the entire `otf/` direc
 Here is a basic usage example:
 
 ```typst
-#import "@preview/neat-cv:0.6.1": cv, side, entry, item-with-level, contact-info, social-links
+#import "@preview/neat-cv:0.6.2": cv, side, entry, item-with-level, contact-info, social-links
 
 #show: cv.with(
   author: (
@@ -122,7 +122,7 @@ For a more complete example, see the `template/cv.typ` file in the repository.
 You can also create a matching cover letter:
 
 ```typst
-#import "@preview/neat-cv:0.6.1": letter
+#import "@preview/neat-cv:0.6.2": letter
 
 #show: letter.with(
   author: (
