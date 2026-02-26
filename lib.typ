@@ -515,7 +515,6 @@
     }
   }
 
-
   if "page-range" in pub and pub.page-range != none {
     [_:#(pub.page-range)_]
   }
