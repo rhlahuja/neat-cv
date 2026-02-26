@@ -528,6 +528,10 @@
     [, doi: #link("https://doi.org/" + pub.serial-number.doi)[_#(pub.serial-number.doi)_]]
   }
 
+  if "url" in pub {
+    [, #link(pub.url)[_#(pub.url)_]]
+  }
+
   [.]
 }
 
