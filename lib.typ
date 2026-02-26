@@ -370,7 +370,7 @@
 
     #if "address" in author {
       contact-items += (
-        [#v(-0.2em) #fa-icon("map", fill: accent-color)],
+        [#v(-0.2em) #fa-icon("house", fill: accent-color)],
         author.address,
       )
     }
