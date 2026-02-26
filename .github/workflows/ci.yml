@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
     paths:
       - "lib.typ"
       - "template/*"
