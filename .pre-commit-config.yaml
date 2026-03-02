@@ -12,7 +12,8 @@ repos:
         name: typstyle
         description: Check files with typstyle
         entry: typstyle
-        language: system
+        language: rust
+        additional_dependencies: ["cli:typstyle:0.14.4"]
         types: [file]
         files: \.typ$
         args: [--inplace]

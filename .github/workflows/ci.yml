@@ -17,12 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Setup Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
-      - name: Install typstyle
-        run: cargo install --locked typstyle
-
       - name: Run prek
         uses: j178/prek-action@v1
 
