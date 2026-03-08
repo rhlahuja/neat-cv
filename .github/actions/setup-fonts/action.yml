@@ -12,7 +12,7 @@ inputs:
   ruby-version:
     description: 'Ruby version to use'
     required: false
-    default: '3.4'
+    default: '4.0'
 
 runs:
   using: 'composite'
@@ -35,14 +35,14 @@ runs:
       shell: bash
       run: |
         if ! command -v fontist &> /dev/null; then
-          gem install fontist
+          gem install fontist -v 2.1.3 --no-document
         fi
         fontist update
 
     - name: Install fonts from manifest
       shell: bash
       run: |
-        fontist manifest-install -q ${{ inputs.manifest-path }}
+        fontist manifest install -q ${{ inputs.manifest-path }}
         fontist fontconfig update
 
     - name: Install Font Awesome

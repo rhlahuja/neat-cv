@@ -370,7 +370,7 @@
 
     #if "address" in author {
       contact-items += (
-        [#v(-0.2em) #fa-icon("map", fill: accent-color)],
+        [#v(-0.2em) #fa-icon("house", fill: accent-color)],
         author.address,
       )
     }
@@ -515,7 +515,6 @@
     }
   }
 
-
   if "page-range" in pub and pub.page-range != none {
     [_:#(pub.page-range)_]
   }
@@ -526,6 +525,10 @@
 
   if "serial-number" in pub and "doi" in pub.serial-number {
     [, doi: #link("https://doi.org/" + pub.serial-number.doi)[_#(pub.serial-number.doi)_]]
+  }
+
+  if "url" in pub and pub.url != none and type(pub.url) == str {
+    [, #link(pub.url)[_#(pub.url)_]]
   }
 
   [.]

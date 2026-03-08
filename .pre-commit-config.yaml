@@ -13,7 +13,7 @@ repos:
         description: Check files with typstyle
         entry: typstyle
         language: rust
+        additional_dependencies: ["cli:typstyle:0.14.4"]
         types: [file]
-        additional_dependencies: ["cli:typstyle:0.14.0"]
         files: \.typ$
         args: [--inplace]

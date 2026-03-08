@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
     paths:
       - "lib.typ"
       - "template/*"
@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Run prek
         uses: j178/prek-action@v1
@@ -25,13 +25,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup fonts
         uses: ./.github/actions/setup-fonts
         with:
           manifest-path: manifest.yml
-          font-awesome-version: "7.1.0"
+          font-awesome-version: "7.2.0"
 
       - name: Setup Just
         uses: extractions/setup-just@v3
