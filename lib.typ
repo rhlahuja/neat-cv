@@ -527,7 +527,7 @@
     [, doi: #link("https://doi.org/" + pub.serial-number.doi)[_#(pub.serial-number.doi)_]]
   }
 
-  if "url" in pub {
+  if "url" in pub and pub.url != none and type(pub.url) == str {
     [, #link(pub.url)[_#(pub.url)_]]
   }
 
