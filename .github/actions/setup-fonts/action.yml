@@ -35,7 +35,7 @@ runs:
       shell: bash
       run: |
         if ! command -v fontist &> /dev/null; then
-          gem install fontist -v '>= 2.0.0' --no-document
+          gem install fontist -v 2.1 --no-document
         fi
         fontist update
 
