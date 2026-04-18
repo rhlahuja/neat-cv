@@ -1,5 +1,7 @@
 #:schema https://www.schemastore.org/prek.json
 
+exclude = '^assets/'
+
 [[repos]]
 repo = "https://github.com/pre-commit/pre-commit-hooks"
 rev = "v6.0.0"
