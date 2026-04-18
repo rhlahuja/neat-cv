@@ -1,7 +1,6 @@
 #import "@preview/neat-cv:0.7.0": (
-  contact-info, cv, cv-full-width, cv-thin-side, cv-with-side, email-link,
-  entry, item-pills, item-with-level, publications, social-links, thin-label,
-  thin-metric,
+  contact-info, cv, cv-thin-side, cv-with-side, email-link, entry, item-pills,
+  item-with-level, publications, social-links, thin-label, thin-metrics,
 )
 
 #set text(lang: "en")  // Change to display date in your language
@@ -260,9 +259,11 @@
 #pagebreak()
 
 #cv-thin-side[
-  #thin-metric("h-index", "18")
-  #thin-metric("Citations", "423")
-  #thin-metric("Papers", "14")
+  #thin-metrics((
+    (label: "Articles", value: "14"),
+    (label: "Citations", value: "423"),
+    (label: "h-index", value: "18"),
+  ))
 ][
   = Publications
 

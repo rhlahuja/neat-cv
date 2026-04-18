@@ -38,7 +38,8 @@
 /// Width of the thin sidebar variant
 #let THIN_SIDE_WIDTH = 1cm
 
-// ---- Utility ----
+
+// ---- Utilities ----
 /// Calculate/scale the length of stroke elements, as strokes are visual
 /// elements and should have a constant length.
 ///

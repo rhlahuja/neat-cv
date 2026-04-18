@@ -122,7 +122,7 @@
           ],
           [
             #author.firstname #author.lastname CV
-            #box(inset: (x: 0.3em / FOOTER_FONT_SIZE_SCALE), sym.dot.c)
+            #box(inset: (x: 0.5em), sym.dot.c)
             #if date == auto {
               context custom-date-format(
                 datetime.today(),
@@ -262,22 +262,13 @@
       side-content
       v(1fr)
     },
-    grid.vline(stroke: luma(180) + __stroke_length(0.5)),
+    grid.vline(stroke: theme.accent-color.lighten(40%) + __stroke_length(0.5)),
     {
       body
       v(1fr)
     },
   )
 }
-
-/// Layout section with no sidebar (full page width).
-///
-/// -> content
-#let cv-full-width(
-  /// Main body content
-  /// -> content
-  body,
-) = body
 
 /// Layout section with a thin decorative sidebar.
 /// Use `thin-label` and `thin-metric` helpers to build the side content.
@@ -297,9 +288,6 @@
   grid(
     columns: (THIN_SIDE_WIDTH, auto),
     align: (top + center, top + left),
-    fill: (col, _) => if col == 0 { theme.accent-color.lighten(80%) } else {
-      none
-    },
     inset: (col, _) => if col == 0 { (x: 0pt, y: 4mm) } else {
       (left: HORIZONTAL_PAGE_MARGIN, y: 1mm)
     },
@@ -336,32 +324,32 @@
 }
 
 /// A metric item for use in `cv-thin-side` sidebar content.
-/// Displays a label–value pair rotated top-to-bottom.
+/// Displays all label–value pairs in a single rotated line with dot separators.
 ///
 /// -> content
-#let thin-metric(
-  /// Metric label (e.g. "h-index")
-  /// -> string
-  label,
-  /// Metric value (e.g. "18")
-  /// -> string
-  value,
+#let thin-metrics(
+  /// Metric array of dictionaries with keys `label` and `value`.
+  /// -> array
+  metrics,
 ) = context {
   let theme = __st-theme.final()
 
-  let content = (
-    text(
-      size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em,
-      fill: theme.font-color.lighten(30%),
-      label,
-    )
-      + [ ]
-      + text(
-        size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em,
+  let items = metrics.map(metric => {
+    let label = metric.at("label", default: "")
+    let value = metric.at("value", default: "")
+
+    set text(size: SIDE_CONTENT_FONT_SIZE_SCALE * 1.2em)
+
+    [
+      #text(fill: theme.font-color.lighten(30%), label) #h(0.2em) #text(
         weight: "semibold",
         fill: theme.accent-color,
         value,
       )
-  )
+    ]
+  })
+
+  let separator = box(inset: (x: 0.5em), sym.dot.c)
+  let content = items.join(separator)
   rotate(270deg, reflow: true, box(width: measure(content).width, content))
 }
