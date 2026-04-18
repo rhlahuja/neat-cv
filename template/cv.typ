@@ -75,6 +75,9 @@
   #v(1fr)
   #social-links()
 
+  // Use #colbreak() to continue on the next page within the same layout.
+  // In cv-with-side, colbreak() in the sidebar only affects sidebar content
+  // (and vice versa for body content) — both columns are independent.
   #colbreak()
 
   = Languages
@@ -191,7 +194,7 @@
     - Conducted research on high-voltage circuits and early particle acceleration experiments.
   ]
 
-  #colbreak()
+  #colbreak() // Move remaining body content to page 2
 
   = Grants and Awards
 
@@ -269,6 +272,7 @@
 ]
 
 
+// Use #pagebreak() to switch to a different layout (e.g. cv-with-side → cv-thin-side).
 // Page 3: thin sidebar
 #pagebreak()
 
