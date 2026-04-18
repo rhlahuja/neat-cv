@@ -8,11 +8,12 @@ A modern and elegant CV template for Typst, inspired by [Awesome CV](https://git
 
 ## Features
 
-- Modern, clean two-column layout with sidebar
+- Flexible per-page layout: full sidebar, thin decorative sidebar, or full-width
 - Cover letter template
 - Customizable accent color and fonts
 - Publication list generated from Hayagriva YAML, grouped by year, with author highlighting
 - Level bars for languages and skills
+- Item pills for tags and keywords
 - Social/contact info with icons and clickable links
 
 ## Preview
@@ -64,7 +65,7 @@ If you are using the webapp (https://typst.app/), upload the entire `otf/` direc
 Here is a basic usage example:
 
 ```typst
-#import "@preview/neat-cv:0.7.0": cv, side, entry, item-with-level, contact-info, social-links
+#import "@preview/neat-cv:0.7.0": cv, cv-with-side, entry, item-with-level, contact-info, social-links
 
 #show: cv.with(
   author: (
@@ -77,7 +78,7 @@ Here is a basic usage example:
   profile-picture: image("my_profile.png"),
 )
 
-#side[
+#cv-with-side[
   = About Me
   Just someone learning Typst.
 
@@ -90,32 +91,53 @@ Here is a basic usage example:
 
   #v(1fr)
   #social-links()
+][
+  = Education
+
+  #entry(
+    title: "Master of Science in Data Science",
+    institution: "University of Somewhere",
+    location: "Somewhere, World",
+    date: "2023",
+    [Thesis: "My thesis title"],
+  )
+
+  = Experience
+
+  #entry(
+    title: "Data Scientist",
+    institution: "Somewhere Inc.",
+    location: "Somewhere, World",
+    date: "2023 – present",
+    [
+      - Worked on some interesting projects.
+    ],
+  )
 ]
-
-= Education
-
-#entry(
-  title: "Master of Science in Data Science",
-  institution: "University of Somewhere",
-  location: "Somewhere, World",
-  date: "2023",
-  [Thesis: "My thesis title"],
-)
-
-= Experience
-
-#entry(
-  title: "Data Scientist",
-  institution: "Somewhere Inc.",
-  location: "Somewhere, World",
-  date: "2023 - Present",
-  [
-    - Worked on some interesting projects.
-  ],
-)
 ```
 
-For a more complete example, see the `template/cv.typ` file in the repository.
+For pages with a thin decorative sidebar (e.g. a publications section), use `cv-thin-side`:
+
+```typst
+#import "@preview/neat-cv:0.7.0": cv-thin-side, thin-label, thin-metrics, publications
+
+// Use #pagebreak() to switch layout between pages
+#pagebreak()
+
+#cv-thin-side[
+  #thin-label("Publications")
+  #v(5mm)
+  #thin-metrics((
+    (label: "h-index", value: "12"),
+    (label: "Citations", value: "280"),
+  ))
+][
+  = Publications
+  #publications(yaml("publications.yml"), highlight-authors: ("Smith, John",))
+]
+```
+
+For a complete example, see the `template/cv.typ` file in the repository.
 
 ### Cover Letter
 
