@@ -1,6 +1,6 @@
 target := "local"
 docs := "cv letter"
-png_specs := "cv:1 cv:2 letter:1"
+svg_specs := "cv:1 cv:2 cv:3 letter:1"
 
 default: compile-pdf
 
@@ -18,31 +18,39 @@ compile-pdf-doc doc:
         just _compile-local {{ doc }} pdf; \
     fi
 
-# Compile all documents to PNG
-compile-png:
-    @for spec in {{ png_specs }}; do \
+# Compile all documents to SVG (for README previews)
+compile-svg:
+    @for spec in {{ svg_specs }}; do \
         doc="${spec%%:*}"; \
         page="${spec##*:}"; \
-        just compile-png-doc "$doc" "$page"; \
+        just compile-svg-doc "$doc" "$page"; \
     done
 
-# Compile specific document page to PNG
-compile-png-doc doc page="1":
+# Compile specific document page to SVG
+compile-svg-doc doc page="1":
     #!/usr/bin/env bash
     if [ "{{ doc }}" = "letter" ]; then
-        output="assets/{{ doc }}.png"
+        output="assets/{{ doc }}.svg"
     else
-        output="assets/{{ doc }}_p{{ page }}.png"
+        output="assets/{{ doc }}_p{{ page }}.svg"
     fi
     if [ "{{ target }}" = "published" ]; then
-        just _compile-png template/{{ doc }}.typ $output {{ page }}
+        just _compile-svg template/{{ doc }}.typ $output {{ page }}
     else
-        just _compile-local {{ doc }} png {{ page }} $output
+        just _compile-local {{ doc }} svg {{ page }} $output
+    fi
+
+# Compile thumbnail WebP (for typst.toml — only needs updating on major visual changes)
+compile-thumbnail:
+    @if [ "{{ target }}" = "published" ]; then \
+        just _compile-thumbnail template/cv.typ assets/thumbnail.webp; \
+    else \
+        just _compile-local cv thumbnail 1 assets/thumbnail.webp; \
     fi
 
 # Clean generated files
 clean:
-    @rm -f template/*.tmp.typ template/*.pdf assets/cv_p*.png assets/letter.png
+    @rm -f template/*.tmp.typ template/*.pdf assets/cv_p*.svg assets/letter.svg
 
 # Format source files
 format:
@@ -59,8 +67,10 @@ _compile-local doc format page="" output="":
     sed 's|#import "@preview/neat-cv:[0-9.]*"|#import "../lib.typ"|' template/{{ doc }}.typ > "$tmp"
     if [ "{{ format }}" = "pdf" ]; then
         just _compile "$tmp" template/{{ doc }}.pdf
-    elif [ "{{ format }}" = "png" ]; then
-        just _compile-png "$tmp" {{ output }} {{ page }}
+    elif [ "{{ format }}" = "svg" ]; then
+        just _compile-svg "$tmp" {{ output }} {{ page }}
+    elif [ "{{ format }}" = "thumbnail" ]; then
+        just _compile-thumbnail "$tmp" {{ output }}
     fi
     rm "$tmp"
 
@@ -68,8 +78,23 @@ _compile-local doc format page="" output="":
 _compile input output:
     @typst compile --root . {{ input }} {{ output }}
 
-# Compile to PNG
-_compile-png input output page:
-    @typst compile --root . --format png --pages {{ page }} {{ input }} {{ output }}
-    @magick {{ output }} -bordercolor black -border 1 {{ output }}
-    @oxipng {{ output }}
+# Compile to SVG with a thin black border rect
+_compile-svg input output page:
+    #!/usr/bin/env bash
+    typst compile --root . --format svg --pages {{ page }} {{ input }} {{ output }}
+    python3 -c "
+    import re, sys
+    svg = sys.stdin.read()
+    m = re.search(r'width=\"([0-9.]+)pt\" height=\"([0-9.]+)pt\"', svg)
+    w, h = float(m.group(1)), float(m.group(2))
+    border = f'<rect x=\"0.5\" y=\"0.5\" width=\"{w-1}\" height=\"{h-1}\" fill=\"none\" stroke=\"black\" stroke-width=\"1\"/>'
+    print(svg.replace('</svg>', border + '</svg>'))
+    " < {{ output }} > {{ output }}.tmp && mv {{ output }}.tmp {{ output }}
+
+# Compile to WebP (for thumbnail only): export page 1 as PNG, convert to WebP, clean up
+_compile-thumbnail input output:
+    #!/usr/bin/env bash
+    tmp_png="{{ output }}.tmp.png"
+    typst compile --root . --format png --pages 1 {{ input }} "$tmp_png"
+    magick "$tmp_png" {{ output }}
+    rm "$tmp_png"
