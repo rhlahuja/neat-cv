@@ -20,13 +20,13 @@ A modern and elegant CV template for Typst, inspired by [Awesome CV](https://git
 
 ### CV
 
-<img src="assets/cv_p1.svg" alt="CV Page 1" width="49%"/> <img src="assets/cv_p2.svg" alt="CV Page 2" width="49%"/>
+<img src="assets/cv_p1.webp" alt="CV Page 1" width="49%"/> <img src="assets/cv_p2.webp" alt="CV Page 2" width="49%"/>
 
-<img src="assets/cv_p3.svg" alt="CV Page 3" width="49%"/>
+<img src="assets/cv_p3.webp" alt="CV Page 3" width="49%"/>
 
 ### Cover Letter
 
-<img src="assets/letter.svg" alt="Cover letter" width="49%"/>
+<img src="assets/letter.webp" alt="Cover letter" width="49%"/>
 
 ## Requirements
 
