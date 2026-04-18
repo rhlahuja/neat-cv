@@ -289,7 +289,7 @@
     columns: (THIN_SIDE_WIDTH, auto),
     align: (top + center, top + left),
     inset: (col, _) => if col == 0 { (x: 0pt, y: 4mm) } else {
-      (left: HORIZONTAL_PAGE_MARGIN, y: 1mm)
+      (left: HORIZONTAL_PAGE_MARGIN / 2, y: 1mm)
     },
     {
       side-content
