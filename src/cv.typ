@@ -317,7 +317,7 @@
     weight: "medium",
     label,
   )
-  rotate(90deg, reflow: true, box(width: measure(content).width, content))
+  rotate(270deg, reflow: true, box(width: measure(content).width, content))
 }
 
 /// A metric item for use in `cv-thin-side` sidebar content.

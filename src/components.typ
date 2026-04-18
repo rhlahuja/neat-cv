@@ -219,6 +219,24 @@
   ]
 }
 
+/// Reference entry (person name, role, contact). Semantic alias for `entry`.
+///
+/// -> content
+#let reference(
+  /// Person's name
+  /// -> string | none
+  name: none,
+  /// Role or title
+  /// -> string
+  role: "",
+  /// Location
+  /// -> string
+  location: "",
+  /// Contact details or description
+  /// -> content
+  description,
+) = entry(title: name, institution: role, location: location, description)
+
 /// Entry with a level bar (e.g., for skills).
 ///
 /// -> content

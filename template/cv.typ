@@ -1,6 +1,7 @@
 #import "@preview/neat-cv:0.7.0": (
   contact-info, cv, cv-thin-side, cv-with-side, email-link, entry, item-pills,
-  item-with-level, publications, social-links, thin-label, thin-metrics,
+  item-with-level, publications, reference, social-links, thin-label,
+  thin-metrics,
 )
 
 #set text(lang: "en")  // Change to display date in your language
@@ -127,7 +128,7 @@
 
   #entry(
     title: "Independent Inventor & Research Scientist",
-    date: "1955 – now",
+    date: "1955 – present",
     institution: "Hill Valley Laboratory",
     location: "Hill Valley, CA, USA",
   )[
@@ -140,7 +141,7 @@
 
   #entry(
     title: "Science Educator & Public Speaker",
-    date: "1960 – now",
+    date: "1960 – present",
     institution: "Various Institutions",
     location: "USA & Europe",
   )[
@@ -246,9 +247,9 @@
 
   = References
 
-  #entry(
-    title: "Marty McFly",
-    institution: "Musician & Time Traveler",
+  #reference(
+    name: "Marty McFly",
+    role: "Musician & Time Traveler",
     location: "Hill Valley, CA, USA",
     [
       Long-term collaborator and field assistant in temporal experiments.\
@@ -256,9 +257,9 @@
     ],
   )
 
-  #entry(
-    title: "Clara Clayton",
-    institution: "Science Educator",
+  #reference(
+    name: "Clara Clayton",
+    role: "Science Educator",
     location: "Hill Valley, CA, USA",
     [
       Advisor on science communication and educational outreach.\
@@ -273,9 +274,9 @@
 
 #cv-thin-side[
   #thin-metrics((
-    (label: "Articles", value: "14"),
-    (label: "Citations", value: "423"),
     (label: "h-index", value: "18"),
+    (label: "Citations", value: "423"),
+    (label: "Articles", value: "14"),
   ))
 ][
   = Publications
