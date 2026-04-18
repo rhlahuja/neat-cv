@@ -148,6 +148,17 @@
     - Organized science fairs and educational outreach for young students.
   ]
 
+  #entry(
+    title: "Lead Research Physicist",
+    date: "1955 – 1972",
+    institution: "Pacific Science Institute",
+    location: "San Francisco, CA, USA",
+  )[
+    - Led a team of six researchers investigating applied electromagnetism and high-energy particle interactions.
+    - Designed experimental apparatus for controlled plasma discharge studies.
+    - Co-authored seven peer-reviewed articles on electromagnetic field theory.
+  ]
+
   = Academic Experience
 
   #entry(
