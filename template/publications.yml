@@ -164,3 +164,62 @@ brown1990ethics:
     title: Journal of Science and Ethics
     publisher: Hill Valley University Press
     volume: 6
+brown1991quantum:
+  type: article
+  title: "Quantum Coherence and Temporal Superposition: A Unified Framework"
+  author:
+  - Brown, Emmett
+  - Singh, Rajiv
+  - O'Connell, Siobhan
+  date: 1991
+  page-range: 1-28
+  serial-number:
+    doi: 10.9999/hv.1991.1
+  parent:
+    type: periodical
+    title: Physical Review Letters
+    publisher: American Physical Society
+    volume: 7
+brown1992bootstrap:
+  type: article
+  title: "Bootstrap Paradoxes and Information Conservation in Closed Timelike Curves"
+  author:
+  - Brown, Emmett Lathrop
+  - McFly, Marty
+  date: 1992
+  page-range: 14-35
+  serial-number:
+    doi: 10.9999/hv.1992.14
+  parent:
+    type: periodical
+    title: Foundations of Physics
+    publisher: Springer
+    volume: 8
+brown1993nuclear:
+  type: article
+  title: "Alternative Energy Sources for Temporal Displacement: Beyond Plutonium"
+  author:
+  - Brown, Emmett
+  - von Braun, Helga
+  - Clayton, Clara
+  date: 1993
+  page-range: 55-80
+  serial-number:
+    doi: 10.9999/hv.1993.55
+  parent:
+    type: periodical
+    title: Journal of Applied Physics
+    publisher: AIP Publishing
+    volume: 9
+brown1994chapter:
+  type: chapter
+  title: "Time Travel: Engineering Constraints and Theoretical Boundaries"
+  author:
+  - Brown, Emmett
+  - Singh, Rajiv
+  date: 1994
+  page-range: 112-158
+  parent:
+    type: book
+    title: Frontiers in Theoretical Physics
+    publisher: Springer

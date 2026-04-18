@@ -4,6 +4,8 @@
 // Global state for theme and author information
 #let __st-theme = state("theme")
 #let __st-author = state("author")
+#let __st-side-width = state("side-width", 4cm)
+#let __st-profile-picture = state("profile-picture", none)
 
 // ---- Constants ----
 /// Scaling factor to apply to the body font size to obtain the side-content font size.
@@ -29,6 +31,12 @@
 #let LEVEL_BAR_BOX_HEIGHT = 3.5pt
 /// Width of the left column in an `entry()` or `publication()`
 #let ENTRY_LEFT_COLUMN_WIDTH = 5.7em
+/// Scaling factor for the date/year left column in entries and publications
+#let ENTRY_DATE_FONT_SIZE_SCALE = 0.8
+/// Scaling factor for the main content column in entries and publications
+#let ENTRY_CONTENT_FONT_SIZE_SCALE = 0.85
+/// Width of the thin sidebar variant
+#let THIN_SIDE_WIDTH = 1cm
 
 // ---- Utility ----
 /// Calculate/scale the length of stroke elements, as strokes are visual
@@ -222,10 +230,14 @@
       align: (right, left),
       column-gutter: .8em,
       [
-        #text(size: 0.8em, fill: theme.font-color.lighten(50%), date)
+        #text(
+          size: ENTRY_DATE_FONT_SIZE_SCALE * 1em,
+          fill: theme.font-color.lighten(50%),
+          date,
+        )
       ],
       [
-        #set text(size: 0.85em)
+        #set text(size: ENTRY_CONTENT_FONT_SIZE_SCALE * 1em)
 
         #text(weight: "semibold", title)
 
@@ -546,7 +558,7 @@
 ) = (
   for publication in publications-year {
     block([
-      #set text(size: 0.68em)
+      #set text(size: ENTRY_CONTENT_FONT_SIZE_SCALE * 1em)
       #__format-publication-entry(
         publication,
         highlight-authors,
@@ -609,8 +621,11 @@
         columns: (ENTRY_LEFT_COLUMN_WIDTH, auto),
         align: (right, left),
         column-gutter: .8em,
-        text(size: 0.8em, fill: theme.font-color.lighten(50%), year),
-
+        text(
+          size: ENTRY_DATE_FONT_SIZE_SCALE * 1em,
+          fill: theme.font-color.lighten(50%),
+          year,
+        ),
         __format-publications-year(
           publications-by-year.at(year),
           highlight-authors,
@@ -680,6 +695,8 @@
     ))
 
     __st-author.update(author)
+    __st-side-width.update(side-width)
+    __st-profile-picture.update(profile-picture)
   }
 
   show: body => (
@@ -692,6 +709,16 @@
             + author.at("lastname", default: "")
         ),
       )
+
+      show heading.where(level: 1): it => block(width: 100%)[
+        #text(
+          fill: accent-color,
+          weight: "regular",
+          font: heading-font,
+          size: 0.9em,
+        )[#smallcaps(it.body)]
+        #box(width: 1fr, line(length: 100%, stroke: accent-color))
+      ]
 
       body
     }
@@ -793,62 +820,31 @@
     }
   }
 
-  let side-content-block = context {
-    set text(size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em)
-
-    show heading.where(level: 1): it => block(width: 100%, above: 2em)[
-      #set text(
-        font: heading-font,
-        fill: accent-color,
-        weight: "regular",
-        size: 0.95em,
-      )
-
-      #grid(
-        columns: (0pt, 1fr),
-        align: horizon,
-        box(
-          fill: accent-color,
-          width: -0.29em / SIDE_CONTENT_FONT_SIZE_SCALE,
-          height: 0.86em / SIDE_CONTENT_FONT_SIZE_SCALE,
-          outset: (left: 0.43em / SIDE_CONTENT_FONT_SIZE_SCALE),
-        ),
-        it.body,
-      )
-    ]
-
-    if profile-picture != none {
-      block(
-        clip: true,
-        stroke: accent-color + __stroke_length(1),
-        radius: side-width / 2,
-        width: 100%,
-        profile-picture,
-      )
-    }
-
-    state("side-content").final()
-  }
-
-  let body-content-block = {
-    show heading.where(level: 1): it => block(width: 100%)[
-      #text(
-        fill: accent-color,
-        weight: "regular",
-        font: heading-font, // if you see a warning here, your font was not found/loaded
-        size: 0.9em,
-      )[#smallcaps(it.body)]
-      #box(width: 1fr, line(length: 100%, stroke: accent-color))
-    ]
-
-    body
-
-    v(1fr)
-  }
-
   head
 
   v(HEADER_BODY_GAP)
+
+  body
+}
+
+
+// ---- CV Layout Sections ----
+
+/// Layout section with a full sidebar. Equivalent to the old global `side()` + body approach.
+/// A single call wrapping all content produces the same result as before.
+///
+/// -> content
+#let cv-with-side(
+  /// Content for the sidebar
+  /// -> content
+  side-content,
+  /// Main body content
+  /// -> content
+  body,
+) = context {
+  let theme = __st-theme.final()
+  let side-width = __st-side-width.final()
+  let profile-picture = __st-profile-picture.final()
 
   grid(
     columns: (side-width + (HORIZONTAL_PAGE_MARGIN / 2), auto),
@@ -860,21 +856,141 @@
         (left: (HORIZONTAL_PAGE_MARGIN / 2), y: 1mm)
       }
     },
-    side-content-block,
+    {
+      set text(size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em)
+
+      show heading.where(level: 1): it => block(width: 100%, above: 2em)[
+        #set text(
+          font: theme.fonts.heading,
+          fill: theme.accent-color,
+          weight: "regular",
+          size: 0.95em,
+        )
+
+        #grid(
+          columns: (0pt, 1fr),
+          align: horizon,
+          box(
+            fill: theme.accent-color,
+            width: -0.29em / SIDE_CONTENT_FONT_SIZE_SCALE,
+            height: 0.86em / SIDE_CONTENT_FONT_SIZE_SCALE,
+            outset: (left: 0.43em / SIDE_CONTENT_FONT_SIZE_SCALE),
+          ),
+          it.body,
+        )
+      ]
+
+      if profile-picture != none {
+        block(
+          clip: true,
+          stroke: theme.accent-color + __stroke_length(1),
+          radius: side-width / 2,
+          width: 100%,
+          profile-picture,
+        )
+      }
+
+      side-content
+    },
     grid.vline(stroke: luma(180) + __stroke_length(0.5)),
-    body-content-block,
+    {
+      body
+      v(1fr)
+    },
   )
 }
 
-/// Defines sidebar content for the CV.
+/// Layout section with no sidebar (full page width).
 ///
 /// -> content
-#let side(
-  /// Content to display in the sidebar
+#let cv-full-width(
+  /// Main body content
   /// -> content
-  content,
-) = {
-  context state("side-content").update(content)
+  body,
+) = body
+
+/// Layout section with a thin decorative sidebar.
+/// Use `thin-label` and `thin-metric` helpers to build the side content.
+/// Useful for supplementary sections (publications, appendices, etc.).
+///
+/// -> content
+#let cv-thin-side(
+  /// Content for the thin sidebar (use thin-label / thin-metric helpers)
+  /// -> content
+  side-content,
+  /// Main body content
+  /// -> content
+  body,
+) = context {
+  let theme = __st-theme.final()
+
+  grid(
+    columns: (THIN_SIDE_WIDTH, auto),
+    align: (top + center, top + left),
+    inset: (col, _) => if col == 0 { (x: 0pt, y: 4mm) } else {
+      (left: HORIZONTAL_PAGE_MARGIN, y: 1mm)
+    },
+    {
+      side-content
+      v(1fr)
+    },
+    grid.vline(stroke: theme.accent-color.lighten(40%) + __stroke_length(0.5)),
+    {
+      body
+      v(1fr)
+    },
+  )
+}
+
+/// A section label for use in `cv-thin-side` sidebar content.
+/// Displays rotated text reading top-to-bottom.
+///
+/// -> content
+#let thin-label(
+  /// Label text
+  /// -> string
+  label,
+) = context {
+  let theme = __st-theme.final()
+  let content = text(
+    font: theme.fonts.heading,
+    fill: theme.accent-color,
+    size: 0.75em,
+    weight: "medium",
+    label,
+  )
+  rotate(90deg, reflow: true, box(width: measure(content).width, content))
+}
+
+/// A metric item for use in `cv-thin-side` sidebar content.
+/// Displays a label–value pair rotated top-to-bottom.
+///
+/// -> content
+#let thin-metric(
+  /// Metric label (e.g. "h-index")
+  /// -> string
+  label,
+  /// Metric value (e.g. "18")
+  /// -> string
+  value,
+) = context {
+  let theme = __st-theme.final()
+
+  let content = (
+    text(
+      size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em,
+      fill: theme.font-color.lighten(30%),
+      label,
+    )
+      + [ ]
+      + text(
+        size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em,
+        weight: "semibold",
+        fill: theme.accent-color,
+        value,
+      )
+  )
+  rotate(270deg, reflow: true, box(width: measure(content).width, content))
 }
 
 // ---- Cover Letter Template ----
