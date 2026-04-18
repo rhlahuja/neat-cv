@@ -1,7 +1,7 @@
 #import "@preview/datify:1.0.1": custom-date-format
 #import "state.typ": (
-  FOOTER_FONT_SIZE_SCALE, HEADER_BODY_GAP, PAGE_MARGIN, __st-author, __st-theme,
-  __stroke_length,
+  DOT_SEPARATOR, FOOTER_FONT_SIZE_SCALE, HEADER_BODY_GAP, PAGE_MARGIN,
+  __st-author, __st-theme, __stroke_length,
 )
 #import "components.typ": contact-info
 
@@ -142,7 +142,7 @@
           block(width: 100%)[
             #align(left)[
               #let position = if type(author.position) == array {
-                author.position.join(box(inset: (x: 0.5em), sym.dot.c))
+                author.position.join(DOT_SEPARATOR)
               } else {
                 author.position
               }

@@ -1,6 +1,3 @@
-#import "@preview/datify:1.0.1": custom-date-format
-#import "@preview/fontawesome:0.6.0": fa-icon
-
 // Global state for theme and author information
 #let __st-theme = state("theme")
 #let __st-author = state("author")
@@ -39,6 +36,10 @@
 #let ENTRY_CONTENT_FONT_SIZE_SCALE = 0.85
 /// Width of the thin sidebar variant
 #let THIN_SIDE_WIDTH = 1cm
+
+
+/// Dot separator used between inline items (footer, position list, etc.)
+#let DOT_SEPARATOR = box(inset: (x: 0.5em), sym.dot.c)
 
 
 // ---- Utilities ----

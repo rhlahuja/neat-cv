@@ -331,53 +331,40 @@
 /// Displays the author's contact information (email, phone, address).
 ///
 /// -> content
-#let contact-info() = (
-  context [
-    #let author = __st-author.final()
-    #let theme = __st-theme.final()
-    #let accent-color = theme.accent-color
-    #let contact-items = ()
+#let contact-info() = context {
+  let author = __st-author.final()
+  let accent-color = __st-theme.final().accent-color
 
-    #if "email" in author {
+  let contact-defs = (
+    ("email", "envelope", a => link("mailto:" + a.email, a.email)),
+    (
+      "matrix",
+      "comment",
+      a => link("https://matrix.to/#/" + a.matrix, a.matrix),
+    ),
+    ("phone", "mobile-screen", a => link("tel:" + a.phone, a.phone)),
+    ("address", "house", a => a.address),
+  )
+
+  let contact-items = ()
+  for (key, icon, render) in contact-defs {
+    if key in author {
       contact-items += (
-        [#v(-0.2em) #fa-icon("envelope", fill: accent-color)],
-        link("mailto:" + author.email, author.email),
+        [#v(-0.2em) #fa-icon(icon, fill: accent-color)],
+        render(author),
       )
     }
+  }
 
-    #if "matrix" in author {
-      contact-items += (
-        [#v(-0.2em) #fa-icon("comment", fill: accent-color)],
-        link("https://matrix.to/#/" + author.matrix, author.matrix),
-      )
-    }
-
-    #if "phone" in author {
-      contact-items += (
-        [#v(-0.2em) #fa-icon("mobile-screen", fill: accent-color)],
-        link("tel:" + author.phone, author.phone),
-      )
-    }
-
-    #if "address" in author {
-      contact-items += (
-        [#v(-0.2em) #fa-icon("house", fill: accent-color)],
-        author.address,
-      )
-    }
-
-    #if contact-items.len() > 0 {
-      table(
-        columns: (1em, 1fr),
-        align: (center, left),
-        inset: 0pt,
-        column-gutter: 0.5em,
-        row-gutter: 1em,
-        stroke: none,
-        ..contact-items
-      )
-    } else {
-      []
-    }
-  ]
-)
+  if contact-items.len() > 0 {
+    table(
+      columns: (1em, 1fr),
+      align: (center, left),
+      inset: 0pt,
+      column-gutter: 0.5em,
+      row-gutter: 1em,
+      stroke: none,
+      ..contact-items
+    )
+  }
+}

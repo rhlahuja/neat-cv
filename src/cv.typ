@@ -1,8 +1,9 @@
 #import "@preview/datify:1.0.1": custom-date-format
 #import "state.typ": (
-  FOOTER_FONT_SIZE_SCALE, HEADER_BODY_GAP, HORIZONTAL_PAGE_MARGIN, PAGE_MARGIN,
-  SIDE_CONTENT_FONT_SIZE_SCALE, THIN_SIDE_WIDTH, __st-author,
-  __st-profile-picture, __st-side-width, __st-theme, __stroke_length,
+  DOT_SEPARATOR, FOOTER_FONT_SIZE_SCALE, HEADER_BODY_GAP,
+  HORIZONTAL_PAGE_MARGIN, PAGE_MARGIN, SIDE_CONTENT_FONT_SIZE_SCALE,
+  THIN_SIDE_WIDTH, __st-author, __st-profile-picture, __st-side-width,
+  __st-theme, __stroke_length,
 )
 
 
@@ -130,7 +131,7 @@
           )
         }
 
-        footer-items.join(box(inset: (x: 0.5em), sym.dot.c))
+        footer-items.join(DOT_SEPARATOR)
       }
 
       if gdpr {
@@ -161,7 +162,7 @@
       )[
         #set align(center)
         #let position = if type(author.position) == array {
-          author.position.join(box(inset: (x: 0.5em), sym.dot.c))
+          author.position.join(DOT_SEPARATOR)
         } else {
           author.position
         }
@@ -346,7 +347,7 @@
     ]
   })
 
-  let separator = box(inset: (x: 0.5em), sym.dot.c)
+  let separator = DOT_SEPARATOR
   let content = items.join(separator)
   rotate(270deg, reflow: true, box(width: measure(content).width, content))
 }
