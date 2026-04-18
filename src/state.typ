@@ -15,15 +15,17 @@
 /// Scaling factor to apply to the body font size to obtain the footer font size.
 #let FOOTER_FONT_SIZE_SCALE = 0.7
 /// Gap between the header (colored block at the top) and body
-#let HEADER_BODY_GAP = 2mm
+#let HEADER_BODY_GAP = 3mm
 /// Horizontal page margin
 #let HORIZONTAL_PAGE_MARGIN = 12mm
+/// Vertical page margin
+#let VERTICAL_PAGE_MARGIN = 15mm
 /// All page margins, defined explicitly
 #let PAGE_MARGIN = (
   left: HORIZONTAL_PAGE_MARGIN,
   right: HORIZONTAL_PAGE_MARGIN,
-  top: HORIZONTAL_PAGE_MARGIN - HEADER_BODY_GAP,
-  bottom: HORIZONTAL_PAGE_MARGIN,
+  top: VERTICAL_PAGE_MARGIN - HEADER_BODY_GAP,
+  bottom: VERTICAL_PAGE_MARGIN,
 )
 /// Length of the gap between individual sections of the level bar
 #let LEVEL_BAR_GAP_SIZE = 2pt

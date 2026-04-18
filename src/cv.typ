@@ -104,44 +104,42 @@
     paper: paper-size,
     margin: PAGE_MARGIN,
     footer: if footer == auto {
-      [
-        #set text(
-          size: FOOTER_FONT_SIZE_SCALE * 1em,
-          fill: font-color.lighten(50%),
+      set align(center)
+      set text(
+        size: FOOTER_FONT_SIZE_SCALE * 1em,
+        fill: font-color.lighten(50%),
+      )
+
+      context {
+        let footer-items = (
+          [#author.firstname #author.lastname CV],
+          if date == auto {
+            custom-date-format(
+              datetime.today(),
+              pattern: "MMMM, yyyy",
+              lang: text.lang,
+            )
+          } else {
+            date
+          },
         )
 
-        #grid(
-          columns: (side-width, 1fr),
-          align: center,
-          gutter: HORIZONTAL_PAGE_MARGIN,
-          inset: 0pt,
-          [
-            #context if counter(page).final().first() > 1 {
-              counter(page).display("1 / 1", both: true)
-            }
-          ],
-          [
-            #author.firstname #author.lastname CV
-            #box(inset: (x: 0.5em), sym.dot.c)
-            #if date == auto {
-              context custom-date-format(
-                datetime.today(),
-                pattern: "MMMM, yyyy",
-                lang: text.lang,
-              )
-            } else {
-              date
-            }
+        if counter(page).final().first() > 1 {
+          footer-items.push(
+            counter(page).display("1 / 1", both: true),
+          )
+        }
 
-            #if gdpr {
-              [
-                I authorise the processing of personal data contained within my CV,
-                according to GDPR (EU) 2016/679, Article 6.1(a).
-              ]
-            }
-          ],
-        )
-      ]
+        footer-items.join(box(inset: (x: 0.5em), sym.dot.c))
+      }
+
+      if gdpr {
+        [
+          #linebreak()
+          I authorise the processing of personal data contained within my CV,
+          according to GDPR (EU) 2016/679, Article 6.1(a).
+        ]
+      }
     } else {
       footer
     },
@@ -161,29 +159,28 @@
         ),
         inset: (bottom: page.margin.top),
       )[
-        #align(center)[
-          #let position = if type(author.position) == array {
-            author.position.join(box(inset: (x: 0.5em), sym.dot.c))
-          } else {
-            author.position
-          }
+        #set align(center)
+        #let position = if type(author.position) == array {
+          author.position.join(box(inset: (x: 0.5em), sym.dot.c))
+        } else {
+          author.position
+        }
 
-          #set text(fill: white, font: heading-font) // if you see a warning here, your font was not found/loaded
+        #set text(fill: white, font: heading-font) // if you see a warning here, your font was not found/loaded
 
-          #text(size: 3em)[
-            #text(weight: "light")[#author.firstname]
-            #text(weight: "medium")[#author.lastname]
-          ]
+        #text(size: 3em)[
+          #text(weight: "light")[#author.firstname]
+          #text(weight: "medium")[#author.lastname]
+        ]
 
-          #v(-0.5em)
+        #v(-0.5em)
 
-          #text(
-            size: 0.95em,
-            fill: luma(200),
-            weight: "regular",
-          )[
-            #smallcaps(position)
-          ]
+        #text(
+          size: 0.95em,
+          fill: luma(200),
+          weight: "regular",
+        )[
+          #smallcaps(position)
         ]
       ]
     }

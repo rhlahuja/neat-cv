@@ -179,6 +179,8 @@
     - Conducted research on high-voltage circuits and early particle acceleration experiments.
   ]
 
+  #colbreak()
+
   = Grants and Awards
 
   #entry(
@@ -255,7 +257,7 @@
 ]
 
 
-// Page 3: thin sidebar — demonstrates cv-thin-side with metrics in the side strip
+// Page 3: thin sidebar
 #pagebreak()
 
 #cv-thin-side[
