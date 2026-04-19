@@ -79,9 +79,15 @@
   /// Canonical corresponding author name.
   /// -> str | none
   corresponding,
+  /// Publication identifier used in assertion messages.
+  /// -> str | none
+  pub_id: none,
 ) = {
   if corresponding == none { return false }
-  __author-name(author, corresponding) == corresponding
+  (
+    __author-name(author, if pub_id == none { corresponding } else { pub_id })
+      == corresponding
+  )
 }
 
 /// Returns true if author is listed in highlight-authors.
@@ -127,7 +133,11 @@
   ))
   let corresponding = pub.at("corresponding-author", default: none)
   let n-shown = calc.min(max-authors, pub.author.len())
-  let corr-author = pub.author.find(a => __author-matches(a, corresponding))
+  let corr-author = pub.author.find(a => __author-matches(
+    a,
+    corresponding,
+    pub_id: pub.__id,
+  ))
   let authors-truncated = pub.author.len() > n-shown
   let shown-authors = if (
     max-authors > 0
@@ -137,7 +147,7 @@
       and not pub
         .author
         .slice(0, n-shown)
-        .any(a => __author-matches(a, corresponding))
+        .any(a => __author-matches(a, corresponding, pub_id: pub.__id))
   ) {
     (
       ..pub.author.slice(0, max-authors - 1),
@@ -161,7 +171,10 @@
       author-display
     }
 
-    if __author-matches(author, corresponding) and author-highlighted {
+    if (
+      __author-matches(author, corresponding, pub_id: pub.__id)
+        and author-highlighted
+    ) {
       super[#text(weight: "bold")[†]]
     }
 
