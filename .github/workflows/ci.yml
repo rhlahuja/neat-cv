@@ -5,7 +5,7 @@ on:
       - "lib.typ"
       - "template/*"
       - ".github/workflows/ci.yml"
-      - ".pre-commit-config.yaml"
+      - "prek.toml"
   pull_request:
   workflow_dispatch:
 

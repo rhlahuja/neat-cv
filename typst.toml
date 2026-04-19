@@ -14,4 +14,4 @@ exclude = ["assets"]
 [template]
 path = "template"
 entrypoint = "cv.typ"
-thumbnail = "assets/thumbnail.webp"
+thumbnail = "assets/cv_p1.webp"

@@ -40,26 +40,6 @@ compile-webp-doc doc page="1":
         just _compile-local {{ doc }} webp {{ page }} $output
     fi
 
-# Compile thumbnail WebP (for typst.toml — only needs updating on major visual changes)
-compile-thumbnail:
-    @if [ "{{ target }}" = "published" ]; then \
-        just _compile-webp template/cv.typ assets/thumbnail.webp 1; \
-    else \
-        just _compile-local cv webp 1 assets/thumbnail.webp; \
-    fi
-
-# Clean generated files
-clean:
-    @rm -f template/*.tmp.typ template/*.pdf assets/cv_p*.webp assets/letter.webp
-
-# Format source files
-format:
-    @files=""; \
-    for doc in {{ docs }}; do \
-        files="$files template/$doc.typ"; \
-    done; \
-    typstyle -i lib.typ $files
-
 # Compile with local library (for development)
 _compile-local doc format page="" output="":
     #!/usr/bin/env bash
@@ -83,3 +63,15 @@ _compile-webp input output page:
     typst compile --root . --format png --pages {{ page }} {{ input }} "$tmp_png"
     magick "$tmp_png" -bordercolor black -border 1 {{ output }}
     rm "$tmp_png"
+
+# Clean generated files
+clean:
+    @rm -f template/*.tmp.typ template/*.pdf assets/cv_p*.webp assets/letter.webp
+
+# Format source files
+format:
+    @files=""; \
+    for doc in {{ docs }}; do \
+        files="$files template/$doc.typ"; \
+    done; \
+    typstyle -i lib.typ $files
