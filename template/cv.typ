@@ -277,10 +277,12 @@
 #pagebreak()
 
 #cv-thin-side[
+  #thin-label("Bibliography")
+  #v(1em)
   #thin-metrics((
+    (label: "i10-index", value: "12"),
     (label: "h-index", value: "18"),
     (label: "Citations", value: "423"),
-    (label: "Articles", value: "14"),
   ))
 ][
   = Publications

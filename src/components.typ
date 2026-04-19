@@ -1,6 +1,6 @@
 #import "@preview/fontawesome:0.6.0": fa-icon
 #import "state.typ": (
-  ENTRY_CONTENT_FONT_SIZE_SCALE, ENTRY_DATE_FONT_SIZE_SCALE,
+  DOT_SEPARATOR, ENTRY_CONTENT_FONT_SIZE_SCALE, ENTRY_DATE_FONT_SIZE_SCALE,
   ENTRY_LEFT_COLUMN_WIDTH, ITEM_PILLS_FONT_SIZE_SCALE, LEVEL_BAR_BOX_HEIGHT,
   LEVEL_BAR_GAP_SIZE, SIDE_CONTENT_FONT_SIZE_SCALE, __st-author, __st-theme,
   __stroke_length,
@@ -367,4 +367,58 @@
       ..contact-items
     )
   }
+}
+
+
+// ---- Thin Sidebar Helpers ----
+
+/// A section label for use in `cv-thin-side` sidebar content.
+/// Displays rotated text reading top-to-bottom, styled like sidebar headings.
+///
+/// -> content
+#let thin-label(
+  /// Label text
+  /// -> string
+  label,
+) = context {
+  let theme = __st-theme.final()
+  let content = text(
+    font: theme.fonts.heading,
+    fill: theme.accent-color,
+    size: SIDE_CONTENT_FONT_SIZE_SCALE * 1.3em,
+    weight: "regular",
+    label,
+  )
+  rotate(270deg, reflow: true, box(width: measure(content).width, content))
+}
+
+/// A metric item for use in `cv-thin-side` sidebar content.
+/// Displays all label–value pairs in a single rotated line with dot separators.
+///
+/// -> content
+#let thin-metrics(
+  /// Metric array of dictionaries with keys `label` and `value`.
+  /// -> array
+  metrics,
+) = context {
+  let theme = __st-theme.final()
+
+  let items = metrics.map(metric => {
+    let label = metric.at("label", default: "")
+    let value = metric.at("value", default: "")
+
+    set text(size: SIDE_CONTENT_FONT_SIZE_SCALE * 1.2em)
+
+    [
+      #text(fill: theme.font-color.lighten(30%), label) #h(0.2em) #text(
+        weight: "semibold",
+        fill: theme.accent-color,
+        value,
+      )
+    ]
+  })
+
+  let separator = DOT_SEPARATOR
+  let content = items.join(separator)
+  rotate(270deg, reflow: true, box(width: measure(content).width, content))
 }
