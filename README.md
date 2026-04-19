@@ -139,6 +139,8 @@ For pages with a thin decorative sidebar (e.g. a publications section), use `cv-
 ]
 ```
 
+And if you want a full-width layout, you can just use the components directly without wrapping them in a `cv-with-side` or `cv-thin-side` block.
+
 For a complete example, see the `template/cv.typ` file in the repository.
 
 ### Cover Letter
