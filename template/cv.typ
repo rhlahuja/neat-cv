@@ -291,5 +291,6 @@
       "Brown, Emmett",
       "Brown, Emmett Lathrop",
     ),
+    max-authors: 5,
   )
 ]

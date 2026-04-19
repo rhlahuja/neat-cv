@@ -8,7 +8,7 @@ brown1983flux:
   type: article
   title: "Automatic dog feeding apparatus - basic principles of operation"
   author: Brown, Emmett
-  date: 1981
+  date: 1985
   page-range: 1-22
   serial-number:
     doi: 10.9999/hv.1985.1
@@ -26,6 +26,7 @@ brown1985flux:
   - name: Braun
     given-name: Helga
     prefix: von
+  corresponding-author: "Brown, Emmett"
   date: 1985
   page-range: 1-22
   serial-number:
@@ -87,10 +88,10 @@ brown1987energy:
   type: article
   title: "Energy Requirements for Temporal Displacement: From Plutonium to Lightning"
   author:
-  - Brown, Emmett
   - Clayton, Clara
   - O'Connell, Siobhan
-  date: 1987
+  - Brown, Emmett
+  date: 1986
   page-range: 41-60
   serial-number:
     doi: 10.9999/hv.1987.41
@@ -119,10 +120,10 @@ brown1988delorean:
   type: article
   title: "Automotive Engineering for Time Travel: The DeLorean Case Study"
   author:
-  - Brown, Emmett
   - McFly, Marty
   - O'Connell, Siobhan
-  date: 1988
+  - Brown, Emmett
+  date: 1987
   page-range: 61-80
   serial-number:
     doi: 10.9999/hv.1988.61
@@ -135,10 +136,11 @@ brown1989steam:
   type: article
   title: "Temporal Locomotives: Steam Power and Time Travel in the 19th Century"
   author:
-  - Brown, Emmett
   - Clayton, Clara
   - von Braun, Helga
-  date: 1989
+  - Brown, Emmett
+  corresponding-author: "Brown, Emmett"
+  date: 1987
   page-range: 81-100
   serial-number:
     doi: 10.9999/hv.1989.81
@@ -155,7 +157,7 @@ brown1990ethics:
   - Brown, Emmett
   - McFly, Marty
   - Singh, Rajiv
-  date: 1990
+  date: 1988
   page-range: 101-120
   serial-number:
     doi: 10.9999/hv.1990.101
@@ -171,7 +173,7 @@ brown1991quantum:
   - Brown, Emmett
   - Singh, Rajiv
   - O'Connell, Siobhan
-  date: 1991
+  date: 1988
   page-range: 1-28
   serial-number:
     doi: 10.9999/hv.1991.1
@@ -184,9 +186,9 @@ brown1992bootstrap:
   type: article
   title: "Bootstrap Paradoxes and Information Conservation in Closed Timelike Curves"
   author:
-  - Brown, Emmett Lathrop
   - McFly, Marty
-  date: 1992
+  - Brown, Emmett Lathrop
+  date: 1988
   page-range: 14-35
   serial-number:
     doi: 10.9999/hv.1992.14
@@ -199,10 +201,11 @@ brown1993nuclear:
   type: article
   title: "Alternative Energy Sources for Temporal Displacement: Beyond Plutonium"
   author:
-  - Brown, Emmett
   - von Braun, Helga
   - Clayton, Clara
-  date: 1993
+  - Brown, Emmett
+  corresponding-author: "Brown, Emmett"
+  date: 1989
   page-range: 55-80
   serial-number:
     doi: 10.9999/hv.1993.55
@@ -211,13 +214,34 @@ brown1993nuclear:
     title: Journal of Applied Physics
     publisher: AIP Publishing
     volume: 9
+brown1994collab:
+  type: article
+  title: "Multi-Institutional Collaboration on Temporal Field Theory"
+  author:
+  - Clayton, Clara
+  - Singh, Rajiv
+  - McFly, Marty
+  - O'Connell, Siobhan
+  - von Braun, Helga
+  - Tanaka, Hiroshi
+  - Brown, Emmett
+  corresponding-author: "Brown, Emmett"
+  date: 1989
+  page-range: 1-30
+  serial-number:
+    doi: 10.9999/hv.1994.1
+  parent:
+    type: periodical
+    title: Journal of Collaborative Physics
+    publisher: Hill Valley University Press
+    volume: 10
 brown1994chapter:
   type: chapter
   title: "Time Travel: Engineering Constraints and Theoretical Boundaries"
   author:
-  - Brown, Emmett
   - Singh, Rajiv
-  date: 1994
+  - Brown, Emmett
+  date: 1989
   page-range: 112-158
   parent:
     type: book

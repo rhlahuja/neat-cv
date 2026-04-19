@@ -4,12 +4,15 @@
 )
 
 
-/// Process a single author
+/// Converts an author entry into a canonical `Last, First` string.
 ///
-/// -> content
-#let __format-author(
-  // author data
+/// -> str
+#let __author-name(
+  /// Author data as a string or Hayagriva name dictionary.
+  /// -> str | dictionary
   author,
+  /// Publication identifier used in assertion messages.
+  /// -> str
   pub_id,
 ) = {
   // in Hayagriva YAML, authors can be strings or dictionaries
@@ -33,6 +36,22 @@
       + repr(author),
   )
 
+  author
+}
+
+/// Formats an author name as initials plus surname.
+///
+/// -> content
+#let __format-author(
+  /// Author data as a string or Hayagriva name dictionary.
+  /// -> str | dictionary
+  author,
+  /// Publication identifier used in assertion messages.
+  /// -> str
+  pub_id,
+) = {
+  let author = __author-name(author, pub_id)
+
   let author-parts = author.split(", ")
   let last-name = author-parts.at(0, default: author)
   let first-names-str = author-parts.at(1, default: "")
@@ -50,17 +69,50 @@
   [#initials #last-name]
 }
 
+/// Returns true if author matches the corresponding-author string.
+///
+/// -> bool
+#let __author-matches(
+  /// Author data as a string or Hayagriva name dictionary.
+  /// -> str | dictionary
+  author,
+  /// Canonical corresponding author name.
+  /// -> str | none
+  corresponding,
+) = {
+  if corresponding == none { return false }
+  __author-name(author, corresponding) == corresponding
+}
+
+/// Returns true if author is listed in highlight-authors.
+///
+/// -> bool
+#let __author-highlighted(
+  /// Author data as a string or Hayagriva name dictionary.
+  /// -> str | dictionary
+  author,
+  /// Canonical author names that should be emphasized.
+  /// -> array
+  highlight-authors,
+  /// Publication identifier used in assertion messages.
+  /// -> str
+  pub_id,
+) = {
+  let canonical-author = __author-name(author, pub_id)
+  highlight-authors.any(highlighted => highlighted == canonical-author)
+}
+
 /// Formats a publication entry (article, conference, etc.).
 ///
 /// -> content
 #let __format-publication-entry(
-  /// Publication data
+  /// Publication data.
   /// -> dictionary
   pub,
-  /// Authors to highlight
+  /// Canonical author names to highlight.
   /// -> array
   highlight-authors,
-  /// Max authors to display before "et al."
+  /// Maximum number of author slots to display before `_et al_`.
   /// -> int
   max-authors,
 ) = {
@@ -69,27 +121,61 @@
     pub.author = (pub.author,)
   }
 
-  for (i, author) in pub.author.enumerate() {
-    if i < max-authors {
-      let author-display = __format-author(author, pub.__id)
+  let highlighted-authors = highlight-authors.map(a => __author-name(
+    a,
+    pub.__id,
+  ))
+  let corresponding = pub.at("corresponding-author", default: none)
+  let n-shown = calc.min(max-authors, pub.author.len())
+  let corr-author = pub.author.find(a => __author-matches(a, corresponding))
+  let authors-truncated = pub.author.len() > n-shown
+  let shown-authors = if (
+    max-authors > 0
+      and authors-truncated
+      and corr-author != none
+      and __author-highlighted(corr-author, highlighted-authors, pub.__id)
+      and not pub
+        .author
+        .slice(0, n-shown)
+        .any(a => __author-matches(a, corresponding))
+  ) {
+    (
+      ..pub.author.slice(0, max-authors - 1),
+      corr-author,
+    )
+  } else {
+    pub.author.slice(0, n-shown)
+  }
 
-      if author in highlight-authors {
-        text(weight: "medium", author-display)
-      } else {
-        author-display
-      }
+  for (i, author) in shown-authors.enumerate() {
+    let author-display = __format-author(author, pub.__id)
+    let author-highlighted = __author-highlighted(
+      author,
+      highlighted-authors,
+      pub.__id,
+    )
 
-      if i < max-authors - 1 and i < pub.author.len() - 1 {
-        if i == pub.author.len() - 2 {
-          [, and ]
-        } else {
-          [, ]
-        }
-      }
-    } else if i == max-authors {
-      [, _et al_]
-      break
+    if author-highlighted {
+      text(weight: "medium", author-display)
+    } else {
+      author-display
     }
+
+    if __author-matches(author, corresponding) and author-highlighted {
+      super[#text(weight: "bold")[†]]
+    }
+
+    if i < shown-authors.len() - 1 {
+      if i == shown-authors.len() - 2 and not authors-truncated {
+        [, and ]
+      } else {
+        [, ]
+      }
+    }
+  }
+
+  if authors-truncated {
+    [, _et al_]
   }
 
   [, "#pub.title.replace(regex("[{}]"), "")",]
@@ -145,12 +231,16 @@
 }
 
 /// Displays publications for a specific year.
+///
+/// -> content
 #let __format-publications-year(
+  /// Publications belonging to one year bucket.
+  /// -> array
   publications-year,
-  /// Authors to highlight
+  /// Canonical author names to highlight.
   /// -> array
   highlight-authors,
-  /// Max authors to display per entry
+  /// Maximum number of author slots to display per entry.
   /// -> int
   max-authors,
 ) = (
@@ -172,16 +262,17 @@
 /// TODO: this should be handled by default bibliography support once it becomes more flexible,
 /// so that for example different CLS citation styles can be used
 #let publications(
-  /// Data loaded from YAML file
+  /// Bibliography data loaded from YAML.
   /// -> dictionary
   yaml-data,
-  /// Authors to highlight
+  /// Canonical author names to highlight.
   /// -> array
   highlight-authors: (),
-  /// Max authors to display per entry
+  /// Maximum number of author slots to display per entry.
   /// -> int
   max-authors: 10,
-  /// Whether to display years in reverse order (most recent first)
+  /// Whether to display years in reverse order (most recent first).
+  /// -> bool
   reverse-order: true,
 ) = (
   context {
