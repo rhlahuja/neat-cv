@@ -1,5 +1,5 @@
 # Neat CV
-[![Release](https://img.shields.io/github/v/release/dialvarezs/neat-cv?style=flat-square)](https://github.com/dialvarezs/neat-cv/releases)
+[![Typst Package](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Ftypst.app%2Funiverse%2Fpackage%2Fneat-cv&query=%2Fhtml%2Fbody%2Fdiv%2Fmain%2Fdiv%5B2%5D%2Faside%2Fsection%5B2%5D%2Fdl%2Fdd%5B3%5D&logo=typst&label=Universe&color=%23239DAE&style=flat-square)](https://typst.app/universe/package/neat-cv)
 [![Tests](https://img.shields.io/github/actions/workflow/status/dialvarezs/neat-cv/ci.yml?style=flat-square)](https://github.com/dialvarezs/neat-cv/actions/workflows/ci.yml)
 ![License](https://img.shields.io/github/license/dialvarezs/neat-cv?style=flat-square)
 [![Stars](https://img.shields.io/github/stars/dialvarezs/neat-cv?style=flat-square)](https://github.com/dialvarezs/neat-cv/stargazers)
@@ -8,22 +8,25 @@ A modern and elegant CV template for Typst, inspired by [Awesome CV](https://git
 
 ## Features
 
-- Modern, clean two-column layout with sidebar
+- Flexible per-page layout: full sidebar, thin decorative sidebar, or full-width
 - Cover letter template
 - Customizable accent color and fonts
 - Publication list generated from Hayagriva YAML, grouped by year, with author highlighting
 - Level bars for languages and skills
+- Item pills for tags and keywords
 - Social/contact info with icons and clickable links
 
 ## Preview
 
 ### CV
 
-<img src="assets/cv_p1.png" alt="CV Page 1" width="49%"/> <img src="assets/cv_p2.png" alt="CV Page 2" width="49%"/>
+<img src="assets/cv_p1.webp" alt="CV Page 1" width="49%"/> <img src="assets/cv_p2.webp" alt="CV Page 2" width="49%"/>
+
+<img src="assets/cv_p3.webp" alt="CV Page 3" width="49%"/>
 
 ### Cover Letter
 
-<img src="assets/letter.png" alt="Cover letter" width="49%"/>
+<img src="assets/letter.webp" alt="Cover letter" width="49%"/>
 
 ## Requirements
 
@@ -64,7 +67,7 @@ If you are using the webapp (https://typst.app/), upload the entire `otf/` direc
 Here is a basic usage example:
 
 ```typst
-#import "@preview/neat-cv:0.7.0": cv, side, entry, item-with-level, contact-info, social-links
+#import "@preview/neat-cv:1.0.0": cv, cv-with-side, entry, item-with-level, contact-info, social-links
 
 #show: cv.with(
   author: (
@@ -77,7 +80,7 @@ Here is a basic usage example:
   profile-picture: image("my_profile.png"),
 )
 
-#side[
+#cv-with-side[
   = About Me
   Just someone learning Typst.
 
@@ -90,39 +93,62 @@ Here is a basic usage example:
 
   #v(1fr)
   #social-links()
+][
+  = Education
+
+  #entry(
+    title: "Master of Science in Data Science",
+    institution: "University of Somewhere",
+    location: "Somewhere, World",
+    date: "2023",
+    [Thesis: "My thesis title"],
+  )
+
+  = Experience
+
+  #entry(
+    title: "Data Scientist",
+    institution: "Somewhere Inc.",
+    location: "Somewhere, World",
+    date: "2023 – present",
+    [
+      - Worked on some interesting projects.
+    ],
+  )
 ]
-
-= Education
-
-#entry(
-  title: "Master of Science in Data Science",
-  institution: "University of Somewhere",
-  location: "Somewhere, World",
-  date: "2023",
-  [Thesis: "My thesis title"],
-)
-
-= Experience
-
-#entry(
-  title: "Data Scientist",
-  institution: "Somewhere Inc.",
-  location: "Somewhere, World",
-  date: "2023 - Present",
-  [
-    - Worked on some interesting projects.
-  ],
-)
 ```
 
-For a more complete example, see the `template/cv.typ` file in the repository.
+For pages with a thin decorative sidebar (e.g. a publications section), use `cv-thin-side`:
+
+```typst
+#import "@preview/neat-cv:1.0.0": cv-thin-side, thin-label, thin-metrics, publications
+
+// Use #pagebreak() to switch layout between pages
+#pagebreak()
+
+#cv-thin-side[
+  #thin-label("Publications")
+  #v(5mm)
+  #thin-metrics((
+    (label: "h-index", value: "12"),
+    (label: "Citations", value: "280"),
+  ))
+][
+  = Publications
+  #publications(yaml("publications.yml"), highlight-authors: ("Smith, John",))
+]
+```
+
+And if you want a full-width layout, you can just use the components directly without wrapping them in a `cv-with-side` or `cv-thin-side` block.
+
+For a complete example, see the `template/cv.typ` file in the repository.
 
 ### Cover Letter
 
 You can also create a matching cover letter:
 
 ```typst
-#import "@preview/neat-cv:0.7.0": letter
+#import "@preview/neat-cv:1.0.0": letter
 
 #show: letter.with(
   author: (
