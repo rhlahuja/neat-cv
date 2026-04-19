@@ -141,12 +141,6 @@
           },
           block(width: 100%)[
             #align(left)[
-              #let position = if type(author.position) == array {
-                author.position.join(DOT_SEPARATOR)
-              } else {
-                author.position
-              }
-
               #set text(fill: header-text-color, font: heading-font)
 
               #text(size: 2em)[
@@ -156,13 +150,18 @@
 
               #v(-0.5em)
 
-              #text(
-                size: 0.95em,
-                fill: luma(200),
-                weight: "regular",
-              )[
-                #smallcaps(position)
-              ]
+              #if "position" in author {
+                let position = if type(author.position) == array {
+                  author.position.join(DOT_SEPARATOR)
+                } else {
+                  author.position
+                }
+                text(
+                  size: 0.95em,
+                  fill: luma(200),
+                  weight: "regular",
+                )[#smallcaps(position)]
+              }
 
               #text(size: 0.8em)[
                 #contact-info()

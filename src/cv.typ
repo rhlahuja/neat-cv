@@ -161,12 +161,6 @@
         inset: (bottom: page.margin.top),
       )[
         #set align(center)
-        #let position = if type(author.position) == array {
-          author.position.join(DOT_SEPARATOR)
-        } else {
-          author.position
-        }
-
         #set text(fill: white, font: heading-font) // if you see a warning here, your font was not found/loaded
 
         #text(size: 3em)[
@@ -176,13 +170,16 @@
 
         #v(-0.5em)
 
-        #text(
-          size: 0.95em,
-          fill: luma(200),
-          weight: "regular",
-        )[
-          #smallcaps(position)
-        ]
+        #if "position" in author {
+          let position = if type(author.position) == array {
+            author.position.join(DOT_SEPARATOR)
+          } else {
+            author.position
+          }
+          text(size: 0.95em, fill: luma(200), weight: "regular")[#smallcaps(
+            position,
+          )]
+        }
       ]
     }
   }
