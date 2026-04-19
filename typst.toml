@@ -1,6 +1,6 @@
 [package]
 name = "neat-cv"
-version = "0.7.0"
+version = "1.0.0"
 entrypoint = "lib.typ"
 authors = ["Diego Alvarez S. <@dialvarezs>"]
 license = "MIT"
