@@ -222,6 +222,22 @@
     "Awarded for outstanding contributions to science and innovation in the community.",
   )
 
+  #entry(
+    title: "National Science Foundation Research Grant",
+    date: "1979",
+    institution: "National Science Foundation",
+    location: "Washington, D.C., USA",
+    "Awarded \$340,000 for research into practical applications of electromagnetic flux in high-energy temporal systems.",
+  )
+
+  #entry(
+    title: "CalTech Outstanding Alumni Award",
+    date: "1972",
+    institution: "California Institute of Technology",
+    location: "Pasadena, CA, USA",
+    "Recognized for exceptional contributions to applied physics and interdisciplinary innovation.",
+  )
+
   = Talks
 
   #entry(
