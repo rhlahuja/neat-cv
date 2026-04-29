@@ -80,7 +80,7 @@
         ),
       )
 
-      show heading.where(level: 1): it => block(width: 100%)[
+      show heading.where(depth: 1): it => block(width: 100%)[
         #text(
           fill: accent-color,
           weight: "regular",
@@ -223,7 +223,7 @@
     {
       set text(size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em)
 
-      show heading.where(level: 1): it => block(width: 100%, above: 2em)[
+      show heading.where(depth: 1): it => block(width: 100%, above: 2em)[
         #set text(
           font: theme.fonts.heading,
           fill: theme.accent-color,
