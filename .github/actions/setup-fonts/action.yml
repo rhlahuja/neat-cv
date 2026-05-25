@@ -8,11 +8,7 @@ inputs:
   font-awesome-version:
     description: 'Version of Font Awesome to install'
     required: false
-    default: '6.7.2'
-  ruby-version:
-    description: 'Ruby version to use'
-    required: false
-    default: '4.0'
+    default: '7.2.0'
 
 runs:
   using: 'composite'
