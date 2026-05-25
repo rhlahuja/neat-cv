@@ -1,4 +1,4 @@
-#import "@preview/neat-cv:1.0.0": letter
+#import "@preview/neat-cv:1.1.0": letter
 
 #set text(lang: "en")  // Change to display date in your language
 

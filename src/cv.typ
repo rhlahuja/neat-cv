@@ -7,6 +7,39 @@
 )
 
 
+// ---- Page label translations ----
+
+#let _page-labels = (
+  af: ("Bladsy", "van"),
+  ca: ("Pàgina", "de"),
+  cs: ("Strana", "z"),
+  da: ("Side", "af"),
+  de: ("Seite", "von"),
+  en: ("Page", "of"),
+  es: ("Página", "de"),
+  et: ("Leht", "lehest"),
+  fi: ("Sivu", "/"),
+  fr: ("Page", "sur"),
+  hr: ("Stranica", "od"),
+  hu: ("Oldal", "/"),
+  it: ("Pagina", "di"),
+  ja: ("ページ", "/"),
+  ko: ("페이지", "/"),
+  nl: ("Pagina", "van"),
+  no: ("Side", "av"),
+  pl: ("Strona", "z"),
+  pt: ("Página", "de"),
+  ro: ("Pagina", "din"),
+  ru: ("Страница", "из"),
+  sk: ("Strana", "z"),
+  sl: ("Stran", "od"),
+  sr: ("Страна", "од"),
+  sv: ("Sida", "av"),
+  tr: ("Sayfa", "/"),
+  uk: ("Сторінка", "з"),
+  zh: ("第", "页，共"),
+)
+
 // ---- Main CV Template ----
 
 /// Main CV layout. Sets up theme, fonts, page, and structure.
@@ -80,7 +113,7 @@
         ),
       )
 
-      show heading.where(level: 1): it => block(width: 100%)[
+      show heading.where(depth: 1): it => block(width: 100%)[
         #text(
           fill: accent-color,
           weight: "regular",
@@ -126,8 +159,19 @@
         )
 
         if counter(page).final().first() > 1 {
+          let page-lang = text.lang.split("-").first()
+          let (pg, of) = _page-labels.at(
+            page-lang,
+            default: _page-labels.at("en"),
+          )
+          let cur = counter(page).get().first()
+          let tot = counter(page).final().first()
           footer-items.push(
-            counter(page).display("1 / 1", both: true),
+            if page-lang == "zh" {
+              [第#cur 页，共#tot]
+            } else {
+              [#pg #cur #of #tot]
+            },
           )
         }
 
@@ -223,7 +267,7 @@
     {
       set text(size: SIDE_CONTENT_FONT_SIZE_SCALE * 1em)
 
-      show heading.where(level: 1): it => block(width: 100%, above: 2em)[
+      show heading.where(depth: 1): it => block(width: 100%, above: 2em)[
         #set text(
           font: theme.fonts.heading,
           fill: theme.accent-color,

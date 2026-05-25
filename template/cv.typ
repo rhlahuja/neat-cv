@@ -1,4 +1,4 @@
-#import "@preview/neat-cv:1.0.0": (
+#import "@preview/neat-cv:1.1.0": (
   contact-info, cv, cv-thin-side, cv-with-side, email-link, entry, item-pills,
   item-with-level, publications, reference, social-links, thin-label,
   thin-metrics,

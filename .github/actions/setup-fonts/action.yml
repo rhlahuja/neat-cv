@@ -8,36 +8,13 @@ inputs:
   font-awesome-version:
     description: 'Version of Font Awesome to install'
     required: false
-    default: '6.7.2'
-  ruby-version:
-    description: 'Ruby version to use'
-    required: false
-    default: '4.0'
+    default: '7.2.0'
 
 runs:
   using: 'composite'
   steps:
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ inputs.ruby-version }}
-
-    - name: Cache Fontist gem
-      uses: actions/cache@v5
-      id: fontist-cache
-      with:
-        path: |
-          ~/.local/share/gem
-          /opt/hostedtoolcache/Ruby/${{ inputs.ruby-version }}*/x64/lib/ruby/gems
-        key: fontist-${{ runner.os }}-ruby-${{ inputs.ruby-version }}
-
     - name: Setup Fontist
-      shell: bash
-      run: |
-        if ! command -v fontist &> /dev/null; then
-          gem install fontist -v 3.0.0 --no-document
-        fi
-        fontist update
+      uses: fontist/setup-fontist@v2
 
     - name: Install fonts from manifest
       shell: bash
