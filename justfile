@@ -13,7 +13,7 @@ compile-pdf:
 # Compile specific document to PDF
 compile-pdf-doc doc:
     @if [ "{{ target }}" = "published" ]; then \
-        just _compile template/{{ doc }}.typ template/{{ doc }}.pdf; \
+        typst compile --root . template/{{ doc }}.typ template/{{ doc }}.pdf; \
     else \
         just _compile-local {{ doc }} pdf; \
     fi
@@ -46,15 +46,11 @@ _compile-local doc format page="" output="":
     tmp="template/{{ doc }}.tmp.typ"
     sed 's|#import "@preview/neat-cv:[0-9.]*"|#import "../lib.typ"|' template/{{ doc }}.typ > "$tmp"
     if [ "{{ format }}" = "pdf" ]; then
-        just _compile "$tmp" template/{{ doc }}.pdf
+        typst compile --root . "$tmp" template/{{ doc }}.pdf
     elif [ "{{ format }}" = "webp" ]; then
         just _compile-webp "$tmp" {{ output }} {{ page }}
     fi
     rm "$tmp"
-
-# Compile to PDF
-_compile input output:
-    @typst compile --root . {{ input }} {{ output }}
 
 # Compile to WebP: export as PNG, add border, convert to WebP, clean up
 _compile-webp input output page:
@@ -70,8 +66,4 @@ clean:
 
 # Format source files
 format:
-    @files=""; \
-    for doc in {{ docs }}; do \
-        files="$files template/$doc.typ"; \
-    done; \
-    typstyle -i lib.typ $files
+    @typstyle -i lib.typ $(printf "template/%s.typ " {{ docs }})
