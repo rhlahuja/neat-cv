@@ -159,13 +159,20 @@
         )
 
         if counter(page).final().first() > 1 {
+          let page-lang = text.lang.split("-").first()
           let (pg, of) = _page-labels.at(
-            text.lang,
+            page-lang,
             default: _page-labels.at("en"),
           )
           let cur = counter(page).get().first()
           let tot = counter(page).final().first()
-          footer-items.push([#pg #cur #of #tot])
+          footer-items.push(
+            if page-lang == "zh" {
+              [第#cur 页，共#tot]
+            } else {
+              [#pg #cur #of #tot]
+            },
+          )
         }
 
         footer-items.join(DOT_SEPARATOR)
