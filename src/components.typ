@@ -1,4 +1,4 @@
-#import "@preview/fontawesome:0.6.0": fa-icon
+#import "@preview/fontawesome:0.6.1": fa-icon
 #import "state.typ": (
   DOT_SEPARATOR, ENTRY_CONTENT_FONT_SIZE_SCALE, ENTRY_DATE_FONT_SIZE_SCALE,
   ENTRY_LEFT_COLUMN_WIDTH, ITEM_PILLS_FONT_SIZE_SCALE, LEVEL_BAR_BOX_HEIGHT,
