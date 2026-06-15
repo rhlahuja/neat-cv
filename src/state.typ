@@ -1,7 +1,6 @@
 // Global state for theme and author information
 #let __st-theme = state("theme")
 #let __st-author = state("author")
-#let __st-side-width = state("side-width", 4cm)
 #let __st-profile-picture = state("profile-picture", none)
 
 // ---- Constants ----
@@ -36,6 +35,25 @@
 #let ENTRY_CONTENT_FONT_SIZE_SCALE = 0.85
 /// Width of the thin sidebar variant
 #let THIN_SIDE_WIDTH = 1cm
+
+/// User-tunable layout sizes for the CV. Override any subset via the
+/// `layout-sizes` parameter of `cv()`.
+#let DEFAULT_LAYOUT_SIZES = (
+  /// Width of the sidebar in `cv-with-side`
+  side-width: 4cm,
+  /// Bottom padding of the header block (controls header height).
+  /// `auto` matches the top page margin (previous fixed behaviour).
+  header-padding: auto,
+  /// Gap between the header (colored block at the top) and body
+  header-body-gap: HEADER_BODY_GAP,
+  /// Horizontal page margin
+  page-margin-x: HORIZONTAL_PAGE_MARGIN,
+  /// Vertical page margin
+  page-margin-y: VERTICAL_PAGE_MARGIN,
+)
+
+/// Global state holding the merged layout sizes, set by `cv()`.
+#let __st-layout-sizes = state("layout-sizes", DEFAULT_LAYOUT_SIZES)
 
 
 /// Dot separator used between inline items (footer, position list, etc.)

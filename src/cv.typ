@@ -1,9 +1,8 @@
 #import "@preview/datify:1.0.1": custom-date-format
 #import "state.typ": (
-  DOT_SEPARATOR, FOOTER_FONT_SIZE_SCALE, HEADER_BODY_GAP,
-  HORIZONTAL_PAGE_MARGIN, PAGE_MARGIN, SIDE_CONTENT_FONT_SIZE_SCALE,
-  THIN_SIDE_WIDTH, __st-author, __st-profile-picture, __st-side-width,
-  __st-theme, __stroke_length,
+  DEFAULT_LAYOUT_SIZES, DOT_SEPARATOR, FOOTER_FONT_SIZE_SCALE,
+  SIDE_CONTENT_FONT_SIZE_SCALE, THIN_SIDE_WIDTH, __st-author, __st-layout-sizes,
+  __st-profile-picture, __st-theme, __stroke_length,
 )
 
 
@@ -76,9 +75,11 @@
   /// Paper size
   /// -> string
   paper-size: "us-letter",
-  /// Sidebar width
-  /// -> length
-  side-width: 4cm,
+  /// Layout sizes. Override any subset of: `side-width`, `header-padding`
+  /// (header block bottom padding; `auto` = top page margin), `header-body-gap`,
+  /// `page-margin-x`, `page-margin-y`.
+  /// -> dictionary
+  layout-sizes: (:),
   /// Add GDPR data usage in the footer
   /// -> boolean
   gdpr: false,
@@ -89,6 +90,19 @@
   /// -> content
   body,
 ) = {
+  let dim = DEFAULT_LAYOUT_SIZES + layout-sizes
+  let page-margin = (
+    left: dim.page-margin-x,
+    right: dim.page-margin-x,
+    top: dim.page-margin-y - dim.header-body-gap,
+    bottom: dim.page-margin-y,
+  )
+  let header-padding = if dim.header-padding == auto {
+    page-margin.top
+  } else {
+    dim.header-padding
+  }
+
   context {
     __st-theme.update((
       font-color: font-color,
@@ -98,7 +112,7 @@
     ))
 
     __st-author.update(author)
-    __st-side-width.update(side-width)
+    __st-layout-sizes.update(dim)
     __st-profile-picture.update(profile-picture)
   }
 
@@ -136,7 +150,7 @@
 
   set page(
     paper: paper-size,
-    margin: PAGE_MARGIN,
+    margin: page-margin,
     footer: if footer == auto {
       set align(center)
       set text(
@@ -202,7 +216,7 @@
           right: page.margin.right,
           top: page.margin.top,
         ),
-        inset: (bottom: page.margin.top),
+        inset: (bottom: header-padding),
       )[
         #set align(center)
         #set text(fill: white, font: heading-font) // if you see a warning here, your font was not found/loaded
@@ -230,7 +244,7 @@
 
   head
 
-  v(HEADER_BODY_GAP)
+  v(dim.header-body-gap)
 
   body
 }
@@ -251,17 +265,19 @@
   body,
 ) = context {
   let theme = __st-theme.final()
-  let side-width = __st-side-width.final()
+  let dim = __st-layout-sizes.final()
+  let side-width = dim.side-width
+  let margin-x = dim.page-margin-x
   let profile-picture = __st-profile-picture.final()
 
   grid(
-    columns: (side-width + (HORIZONTAL_PAGE_MARGIN / 2), auto),
+    columns: (side-width + (margin-x / 2), auto),
     align: (left, left),
     inset: (col, _) => {
       if col == 0 {
-        (right: (HORIZONTAL_PAGE_MARGIN / 2), y: 1mm)
+        (right: (margin-x / 2), y: 1mm)
       } else {
-        (left: (HORIZONTAL_PAGE_MARGIN / 2), y: 1mm)
+        (left: (margin-x / 2), y: 1mm)
       }
     },
     {
@@ -323,12 +339,13 @@
   body,
 ) = context {
   let theme = __st-theme.final()
+  let margin-x = __st-layout-sizes.final().page-margin-x
 
   grid(
     columns: (THIN_SIDE_WIDTH, auto),
     align: (top + center, top + left),
     inset: (col, _) => if col == 0 { (x: 0pt, y: 4mm) } else {
-      (left: HORIZONTAL_PAGE_MARGIN / 2, y: 1mm)
+      (left: margin-x / 2, y: 1mm)
     },
     {
       side-content
