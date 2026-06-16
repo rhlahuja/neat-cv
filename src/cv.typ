@@ -75,11 +75,11 @@
   /// Paper size
   /// -> string
   paper-size: "us-letter",
-  /// Layout sizes. Override any subset of: `side-width`, `header-padding`
+  /// Layout overrides. Override any subset of: `side-width`, `header-padding`
   /// (header block bottom padding; `auto` = top page margin), `header-body-gap`,
   /// `page-margin-x`, `page-margin-y`.
   /// -> dictionary
-  layout-sizes: (:),
+  layout-overrides: (:),
   /// Add GDPR data usage in the footer
   /// -> boolean
   gdpr: false,
@@ -90,7 +90,7 @@
   /// -> content
   body,
 ) = {
-  let dim = DEFAULT_LAYOUT_SIZES + layout-sizes
+  let dim = DEFAULT_LAYOUT_SIZES + layout-overrides
   let page-margin = (
     left: dim.page-margin-x,
     right: dim.page-margin-x,
