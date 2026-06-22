@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Run prek
         uses: j178/prek-action@v2
@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup fonts
         uses: ./.github/actions/setup-fonts
@@ -34,7 +34,7 @@ jobs:
           font-awesome-version: "7.2.0"
 
       - name: Setup Just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
 
       - name: Setup Typst
         uses: typst-community/setup-typst@v5
