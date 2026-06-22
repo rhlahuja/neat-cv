@@ -36,8 +36,7 @@
 /// Width of the thin sidebar variant
 #let THIN_SIDE_WIDTH = 1cm
 
-/// User-tunable layout sizes for the CV. Override any subset via the
-/// `layout-overrides` parameter of `cv()`.
+/// User-tunable layout sizes for the CV via `layout-overrides` parameter.
 #let DEFAULT_LAYOUT_SIZES = (
   /// Width of the sidebar in `cv-with-side`
   side-width: 4cm,

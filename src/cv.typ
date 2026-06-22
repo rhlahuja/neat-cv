@@ -75,9 +75,12 @@
   /// Paper size
   /// -> string
   paper-size: "us-letter",
-  /// Layout overrides. Override any subset of: `side-width`, `header-padding`
-  /// (header block bottom padding; `auto` = top page margin), `header-body-gap`,
-  /// `page-margin-x`, `page-margin-y`.
+  /// Layout overrides. Override any subset of:
+  /// - `side-width`
+  /// - `header-padding` (header block bottom padding, `auto` = top page margin)
+  /// - `header-body-gap`
+  /// - `page-margin-x`
+  /// - `page-margin-y`
   /// -> dictionary
   layout-overrides: (:),
   /// Add GDPR data usage in the footer
