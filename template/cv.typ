@@ -45,7 +45,7 @@
   // body-font: ("Noto Sans", "Roboto"),
   // body-font-size: 10.5pt,
   // paper-size: "us-letter",
-  // side-width: 4cm,
+  // layout-overrides: (side-width: 4cm, header-padding: auto, header-body-gap: 3mm, page-margin-x: 12mm, page-margin-y: 15mm),
   // gdpr: false,
   // footer: auto,
 )
