@@ -67,7 +67,7 @@ If you are using the webapp (https://typst.app/), upload the entire `otf/` direc
 Here is a basic usage example:
 
 ```typst
-#import "@preview/neat-cv:1.1.0": cv, cv-with-side, entry, item-with-level, contact-info, social-links
+#import "@preview/neat-cv:1.2.0": cv, cv-with-side, entry, item-with-level, contact-info, social-links
 
 #show: cv.with(
   author: (
@@ -121,7 +121,7 @@ Here is a basic usage example:
 For pages with a thin decorative sidebar (e.g. a publications section), use `cv-thin-side`:
 
 ```typst
-#import "@preview/neat-cv:1.1.0": cv-thin-side, thin-label, thin-metrics, publications
+#import "@preview/neat-cv:1.2.0": cv-thin-side, thin-label, thin-metrics, publications
 
 // Use #pagebreak() to switch layout between pages
 #pagebreak()
@@ -148,7 +148,7 @@ For a complete example, see the `template/cv.typ` file in the repository.
 You can also create a matching cover letter:
 
 ```typst
-#import "@preview/neat-cv:1.1.0": letter
+#import "@preview/neat-cv:1.2.0": letter
 
 #show: letter.with(
   author: (
