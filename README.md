@@ -7,7 +7,9 @@
 <a href="https://github.com/dialvarezs/neat-cv/stargazers"><img src="https://img.shields.io/github/stars/dialvarezs/neat-cv?style=flat-square" alt="GitHub Stars"/></a>
 </p>
 
-A modern and elegant CV template for Typst, inspired by [Awesome CV](https://github.com/posquit0/Awesome-CV) and [simple-hipstercv](https://github.com/latex-ninja/simple-hipstercv).
+<p align="center">
+A modern and elegant CV template for Typst, inspired by <a href="https://github.com/posquit0/Awesome-CV">Awesome CV</a> and <a href="https://github.com/latex-ninja/simple-hipstercv">simple-hipstercv</a>.
+</p>
 
 ## Features
 
