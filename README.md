@@ -50,7 +50,7 @@ If you use the template through the webapp (https://typst.app), you don't need t
 If you want to use it locally instead, you will need to install these fonts on your system to use the template with its defaults. You have a few options for this:
 - Use [fontist](https://github.com/fontist/fontist) to install the fonts automatically:
   ```bash
-  fontist manifest-install manifest.yml
+  fontist manifest install manifest.yml
   fontist fontconfig update
   ```
 - Download the fonts manually and install them in your system's font directory:
