@@ -11,9 +11,9 @@
 /// Scaling factor to apply to the body font size to obtain the footer font size.
 #let FOOTER_FONT_SIZE_SCALE = 0.7
 /// Gap between the header (colored block at the top) and body
-#let HEADER_BODY_GAP = 3mm
+#let HEADER_BODY_GAP = 6mm
 /// Horizontal page margin
-#let HORIZONTAL_PAGE_MARGIN = 12mm
+#let HORIZONTAL_PAGE_MARGIN = 7mm
 /// Vertical page margin
 #let VERTICAL_PAGE_MARGIN = 15mm
 /// All page margins, defined explicitly
@@ -28,7 +28,7 @@
 /// Height of the box of each individual section in the level bar
 #let LEVEL_BAR_BOX_HEIGHT = 3.5pt
 /// Width of the left column in an `entry()` or `publication()`
-#let ENTRY_LEFT_COLUMN_WIDTH = 5.7em
+#let ENTRY_LEFT_COLUMN_WIDTH = 5.0em
 /// Scaling factor for the date/year left column in entries and publications
 #let ENTRY_DATE_FONT_SIZE_SCALE = 0.8
 /// Scaling factor for the main content column in entries and publications
