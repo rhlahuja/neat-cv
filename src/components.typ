@@ -63,8 +63,10 @@
     set text(size: 0.95em)
 
     block(width: 100%, height: size, radius: 0.6em, align(horizon, [
+      // Align LinkedIn icon with other contact item icons
+      #h(-0.2em)
       #__fa-icon-outline(icon, size: size)
-      #box(inset: (left: 0.2em), height: 100%, link(url)[#display])
+      #box(inset: (left: 0.1em), height: 100%, link(url)[#display])
     ]))
   }
 )
@@ -288,7 +290,10 @@
       ("orcid", "orcid", "https://orcid.org/"),
     )
 
-    set text(size: 0.95em, fill: luma(100))
+    // Render social links in black text with same size as other contact items
+    // set text(size: 0.95em, fill: luma(100))
+    set text(size: 1em)
+
 
     for (key, icon, url-prefix) in social-defs {
       if key in author {
