@@ -288,6 +288,11 @@
         "https://scholar.google.com/citations?user=",
       ),
       ("orcid", "orcid", "https://orcid.org/"),
+      ("hugging-face", "hugging-face", "https://huggingface.com/"),
+      ("kaggle", "kaggle", "https://www.kaggle.com/"),
+      ("medium", "medium", "https://medium.com/@"),
+      ("dev", "dev", "https://dev.to/"),
+      ("npm", "npm", "https://www.npmjs.com/~"),
     )
 
     // Render social links in black text with same size as other contact items
